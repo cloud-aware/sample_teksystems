@@ -5,6 +5,8 @@ Part 1
         1. Zero Day exploit
         2. Cross Site scripting
         3. SQL injection
+        4. Remote code execution
+        5. Cross-Site Request Forgery
     2. Explain how a vulnerability exploited can provide access to the network
         1. A vulnerability allows the attack to execute code on server, that code can be used to spawn shells or gain privileges
     3. Preventative measures
@@ -12,6 +14,7 @@ Part 1
         2. Vulnerability scanning
         3. Use threat intelligence feeds
         4. WAF
+        5. Pen-testing
 2. Incident Reponse Plan
     1. Identify the affected web server and block inbound/outbound traffic
     2. Take a snapshot of the EBS volumes
