@@ -2,16 +2,16 @@ Part 1
 
 1. Threat Intelligence Report
     1. Types of attack
-        1. Zero Day exploit
-        2. Cross Site scripting
-        3. SQL injection
+1. Zero Day exploit
+2. Cross Site scripting
+3. SQL injection
     2. Explain how a vulnerability exploited can provide access to the network
-        1. A vulnerability allows the attack to execute code on server, that code can be used to spawn shells or gain privileges
+1. A vulnerability allows the attack to execute code on server, that code can be used to spawn shells or gain privileges
     3. Preventative measures
-        1. Regular/Automated patching
-        2. Vulnerability scanning
-        3. Use threat intelligence feeds
-        4. WAF
+1. Regular/Automated patching
+2. Vulnerability scanning
+3. Use threat intelligence feeds
+4. WAF
 2. Incident Reponse Plan
     1. Identify the affected web server and block inbound/outbound traffic
     2. Take a snapshot of the EBS volumes
@@ -32,35 +32,34 @@ Part 2
 
 1. Docker Security Best Practices
     1. 5 best practices:  
-        _I came up with the first 2 and had to look up the others because, while I’m familiar with Docker, their best practices were not at the top of my mind._
-        1. Use trusted / official images for containers
-        2. Run containers as non-root user
-        3. Enable Content Trust
-        4. Scan images for vulnerabilities
-        5. Minimize image size
+1. Use trusted / official images for containers
+2. Run containers as non-root user
+3. Enable Content Trust
+4. Scan images for vulnerabilities
+5. Minimize image size
     2. Dockerfile code: (I’m familiar with docker-compose, so I’ll use that)
 
 ~~~ 
-        version: '3.8'  
-        services:  
-        web:  
-        image: httpd:alpine # 1. Use Official/Base Images  
-        ports:  
-        \- "80:80"  
-        \- “443:443”  
-        volumes:  
-        \- app-data:/app/data:ro # Mount as read-only  
-        user: "1000:1000" # Run as non-root user  
-        depends_on:  
-        \- postgres  
-        security_opt:  
-        \- no-new-privileges:true #prevent container from gaining additional privileges  
-        environment:  
-        \- PUID=${PUID} # default user id, defined in .env  
-        \- PGID=${PGID} # default group id, defined in .env  
-        \- TZ=${TZ} # timezone, defined in .env  
-        postgres:  
-        image: postgres:alpine # Use official, minimized Alpine-based image
+version: '3.8'  
+services:  
+web:  
+image: httpd:alpine # 1. Use Official/Base Images  
+ports:  
+\- "80:80"  
+\- “443:443”  
+volumes:  
+\- app-data:/app/data:ro # Mount as read-only  
+user: "1000:1000" # Run as non-root user  
+depends_on:  
+\- postgres  
+security_opt:  
+\- no-new-privileges:true #prevent container from gaining additional privileges  
+environment:  
+\- PUID=${PUID} # default user id, defined in .env  
+\- PGID=${PGID} # default group id, defined in .env  
+\- TZ=${TZ} # timezone, defined in .env  
+postgres:  
+image: postgres:alpine # Use official, minimized Alpine-based image
 
 user: "1001:1001" # Run as non-root user  
 ports:  
