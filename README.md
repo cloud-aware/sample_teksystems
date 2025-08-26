@@ -115,3 +115,21 @@ Part 3
 
 1. Terraform & Ansible playbook to automate the deployment of a web server on an EC2 instance:  
     The terraform creates the EC2 instance, waits for it to be online and available, then executes the Ansible playbook against the newly created EC2 instance to configure the web server as needed
+
+**INSTRUCTIONS**
+Clone repo
+Modify files as neccessary
+Initialize terraform
+~~~
+$ terraform init
+~~~
+Create plan
+~~~
+$ terraform plan
+~~~
+Apply
+~~~
+$ terraform apply
+~~~
+
+
