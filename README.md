@@ -40,40 +40,41 @@ Part 2
     2. Dockerfile code: (I’m familiar with docker-compose, so I’ll use that)
 
 ~~~ 
-version: '3.8'  
-services:  
-web:  
-image: httpd:alpine # 1. Use Official/Base Images  
-ports:  
-\- "80:80"  
-\- “443:443”  
-volumes:  
-\- app-data:/app/data:ro # Mount as read-only  
-user: "1000:1000" # Run as non-root user  
-depends_on:  
-\- postgres  
-security_opt:  
-\- no-new-privileges:true #prevent container from gaining additional privileges  
-environment:  
-\- PUID=${PUID} # default user id, defined in .env  
-\- PGID=${PGID} # default group id, defined in .env  
-\- TZ=${TZ} # timezone, defined in .env  
-postgres:  
-image: postgres:alpine # Use official, minimized Alpine-based image
+version: '3.8'
 
-user: "1001:1001" # Run as non-root user  
-ports:  
-\- "5432:5432"  
-volumes:  
-\- ${ROOT}/pg/data:/config  
-\- /etc/timezone:/etc/timezone:ro  
-\- /etc/localtime:/etc/localtime:ro  
-security_opt:  
-\- no-new-privileges:true #prevent container from gaining additional privileges  
-environment:  
-\- PUID=${PUID} # default user id, defined in .env  
-\- PGID=${PGID} # default group id, defined in .env  
-\- TZ=${TZ} # timezone, defined in .env  
+services:
+  web: 
+    image: httpd:alpine  # 1. Use Official/Base Images
+    ports:
+      - "80:80"
+      - “443:443”
+    volumes:
+      - app-data:/app/data:ro # Mount as read-only
+    user: "1000:1000" # Run as non-root user
+    depends_on:
+      - postgres
+    security_opt:
+      - no-new-privileges:true #prevent container from gaining additional privileges 
+    environment:
+            - PUID=${PUID} # default user id, defined in .env
+            - PGID=${PGID} # default group id, defined in .env
+            - TZ=${TZ} # timezone, defined in .env
+
+  postgres: 
+    image: postgres:alpine # Use official, minimized Alpine-based image
+    user: "1001:1001" # Run as non-root user
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${ROOT}/pg/data:/config
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    security_opt:
+      - no-new-privileges:true #prevent container from gaining additional privileges
+    environment:
+            - PUID=${PUID} # default user id, defined in .env
+            - PGID=${PGID} # default group id, defined in .env
+            - TZ=${TZ} # timezone, defined in .env
 
 ~~~
 1. Kubernetes Security Configuration
