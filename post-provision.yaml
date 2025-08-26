@@ -1,0 +1,68 @@
+---
+
+- hosts: all
+  gather_facts: yes
+    
+  pre_tasks:
+
+  - name: install boto3/botocore
+    pip:
+      name:
+        - boto3
+        - botocore
+      state: latest
+      extra_args: --user
+
+  tasks:
+
+  - name: Install preliminary packages
+    dnf:
+      name:
+        - python3-urllib3
+        - python3
+        - jq
+        - wget
+        - vim
+        - perl-devel
+        - make
+        - nfs-utils
+        - bc
+        - ghostscript
+      state: latest  
+    become: true
+
+  - name: copy httpd.conf
+    copy:
+      src: files/httpd.conf
+      dest: /etc/httpd/conf/httpd.conf
+      mode: 0644
+    become: true
+
+  - name: init mount dirs
+    shell: |
+      #Assets Mount
+      mkdir -p /var/www/sites-files
+      chown apache:apache /var/www/sites-files
+      chmod 755 /var/www/sites-files
+
+      #ebs mount
+      mkdir -p /var/www/html
+      chmod 755 /var/www/html
+    become: true
+
+  - name: Add firewalld rules for ssh,http,https
+    shell: |
+      sudo firewall-cmd --add-port=80/tcp --permanent
+      sudo firewall-cmd --add-port=443/tcp --permanent
+      sudo firewall-cmd --add-port=22/tcp --permanent
+      sudo firewall-cmd --add-service=http --permanent
+      sudo firewall-cmd --add-service=https --permanent
+      sudo firewall-cmd --add-service=ssh --permanent
+      sudo firewall-cmd --reload
+    become: true    
+
+  - name: Upgrade all packages
+    dnf:
+      name: "*"
+      state: latest
+    become: true
