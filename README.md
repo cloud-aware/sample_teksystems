@@ -117,17 +117,17 @@ Part 3
     The terraform creates the EC2 instance, waits for it to be online and available, then executes the Ansible playbook against the newly created EC2 instance to configure the web server as needed
 
 **INSTRUCTIONS**
-Clone repo
-Modify files as neccessary
-Initialize terraform
+1. Clone repo
+2. Modify files as neccessary
+3. Initialize terraform
 ~~~
 $ terraform init
 ~~~
-Create plan
+4. Create plan
 ~~~
 $ terraform plan
 ~~~
-Apply
+5. Apply
 ~~~
 $ terraform apply
 ~~~
